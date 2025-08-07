@@ -23,22 +23,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
-      # Optional: fail fast if the spec is invalid
       - name: Install Redocly CLI
         run: npm i -g @redocly/cli
 
+      # Optional: fail fast if the spec is invalid
       - name: Lint OpenAPI (optional)
         run: redocly lint openapi.yaml
 
       - name: Build Redoc site
-        run: redocly build-docs openapi.yaml --output=site
+        run: |
+          mkdir -p docs
+          redocly build-docs openapi.yaml --output ./docs/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: docs
 
   deploy:
     needs: build
@@ -47,6 +48,9 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
