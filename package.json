@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/mims-harvard/medlog/issues"
   },
-  "homepage": "https://github.com/mims-harvard/medlog#readme"
+  "homepage": "https://github.com/mims-harvard/medlog#readme",
+  "dependencies": {
+    "@redocly/cli": "^2.0.2"
+  }
 }

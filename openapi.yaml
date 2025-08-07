@@ -1,37 +1,37 @@
 openapi: 3.0.4
 info:
   title: MedLog API Specification
-  description: |-
-    MedLog is a protocol for event-level logging of clinical AI. Any time an AI model is invoked to interact with a human, interface with another algorithm, or act independently, a MedLog record is created. This record consists of nine core fields: model, user, target, inputs, artifacts, outputs, outcomes, metadata, and feedback, providing a structured and consistent record of model activity. The MedLog protocol can catalyze the development of new databases and software to store and analyze MedLog records. Realizing this vision would enable continuous surveillance, auditing, and iterative improvement of medical AI – including, when needed, detailed traces for complex, agentic, or multi-stage workflows – laying the foundation for a new form of AI-centric digital epidemiology.
-
-    Some useful links:
-    - [MedLog repository](https://github.com/mims-harvard/medlog)
-  # termsOfService: https://swagger.io/terms/
+  description: "MedLog is a protocol for event-level logging of clinical AI. Any time\
+    \ an AI model is invoked to interact with a human, interface with another algorithm,\
+    \ or act independently, a MedLog record is created. This record consists of nine\
+    \ core fields: model, user, target, inputs, artifacts, outputs, outcomes, metadata,\
+    \ and feedback, providing a structured and consistent record of model activity.\
+    \ The MedLog protocol can catalyze the development of new databases and software\
+    \ to store and analyze MedLog records. Realizing this vision would enable continuous\
+    \ surveillance, auditing, and iterative improvement of medical AI \u2013 including,\
+    \ when needed, detailed traces for complex, agentic, or multi-stage workflows\
+    \ \u2013 laying the foundation for a new form of AI-centric digital epidemiology.\n\
+    \nSome useful links:\n- [MedLog repository](https://github.com/mims-harvard/medlog)"
   contact:
     email: anoori@college.harvard.edu
   license:
     name: MIT
     url: https://mit-license.org/
   version: 0.0.1
-# externalDocs:
-#   description: Find out more about Swagger
-#   url: https://swagger.io
 servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/harvard-647/MedLog/0.0.1
-  - url: https://medlog.swagger.io/api/v3
-
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/harvard-647/MedLog/0.0.1
+- url: https://medlog.swagger.io/api/v3
 tags:
-  - name: Events
-    description: Write-once event logging endpoints
-
+- name: Events
+  description: Write-once event logging endpoints
 paths:
   /event/inference-start:
     post:
       summary: Record the beginning of an inference run
       operationId: postInferenceStart
-      tags: [Events]
+      tags:
+      - Events
       requestBody:
         required: true
         content:
@@ -41,12 +41,32 @@ paths:
       responses:
         '201':
           description: Event accepted
-
+        '400':
+          description: Bad request. Invalid payload or missing fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. Insufficient permissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - ApiKeyAuth: []
   /event/internal-artifact:
     post:
       summary: Record a new internal model artifact
       operationId: postInternalArtifact
-      tags: [Events]
+      tags:
+      - Events
       requestBody:
         required: true
         content:
@@ -56,12 +76,32 @@ paths:
       responses:
         '201':
           description: Event accepted
-
+        '400':
+          description: Bad request. Invalid payload or missing fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. Insufficient permissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - ApiKeyAuth: []
   /event/human-output:
     post:
       summary: Record content shown to a human user
       operationId: postHumanOutput
-      tags: [Events]
+      tags:
+      - Events
       requestBody:
         required: true
         content:
@@ -71,12 +111,32 @@ paths:
       responses:
         '201':
           description: Event accepted
-
+        '400':
+          description: Bad request. Invalid payload or missing fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. Insufficient permissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - ApiKeyAuth: []
   /event/outcome:
     post:
       summary: Attribute a downstream patient or system outcome to a prior inference
       operationId: postOutcome
-      tags: [Events]
+      tags:
+      - Events
       requestBody:
         required: true
         content:
@@ -86,12 +146,32 @@ paths:
       responses:
         '201':
           description: Event accepted
-
+        '400':
+          description: Bad request. Invalid payload or missing fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. Insufficient permissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - ApiKeyAuth: []
   /event/user-feedback:
     post:
       summary: Record explicit user feedback
       operationId: postUserFeedback
-      tags: [Events]
+      tags:
+      - Events
       requestBody:
         required: true
         content:
@@ -101,13 +181,35 @@ paths:
       responses:
         '201':
           description: Event accepted
-
+        '400':
+          description: Bad request. Invalid payload or missing fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. Insufficient permissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    # ---------- reusable building blocks ----------
     BaseEvent:
       type: object
-      required: [event_id, timestamp, medlog_version, system_metadata]
+      required:
+      - event_id
+      - timestamp
+      - medlog_version
+      - system_metadata
       properties:
         event_id:
           type: string
@@ -127,139 +229,217 @@ components:
           format: date-time
         medlog_version:
           type: string
-          example: "1.0"
+          example: '1.0'
         system_metadata:
           $ref: '#/components/schemas/SystemMetadata'
-
     SystemMetadata:
       type: object
       properties:
-        hostname: { type: string }
-        app_name: { type: string }
-        proc_id:  { type: string }
-        latency_ms: { type: integer, format: int32 }
-
+        hostname:
+          type: string
+        app_name:
+          type: string
+        proc_id:
+          type: string
+        latency_ms:
+          type: integer
+          format: int32
     ModelInstance:
       type: object
       properties:
-        model_id:        { type: string, example: "gpt-4o" }
-        model_version:   { type: string, example: "2025-05-01" }
-        model_card_url:  { type: string, format: uri }
-        data_sheet_url:  { type: string, format: uri }
-
+        model_id:
+          type: string
+          example: gpt-4o
+        model_version:
+          type: string
+          example: '2025-05-01'
+        model_card_url:
+          type: string
+          format: uri
+        data_sheet_url:
+          type: string
+          format: uri
     UserIdentity:
       type: object
       properties:
-        caller_type: { type: string, enum: [clinician, patient, admin, service] }
-        caller_id:   { type: string }
-
+        caller_type:
+          type: string
+          enum:
+          - clinician
+          - patient
+          - admin
+          - service
+        caller_id:
+          type: string
     TargetIdentity:
       type: object
       properties:
-        target_type: { type: string, enum: [patient, document, claim, none] }
-        target_id:   { type: string }
-
+        target_type:
+          type: string
+          enum:
+          - patient
+          - document
+          - claim
+          - none
+        target_id:
+          type: string
     Inputs:
       type: object
       properties:
-        prompt:      { type: string }
-        input_uri:   { type: string, format: uri, description: "Pointer to bulky input data" }
-
+        prompt:
+          type: string
+        input_uri:
+          type: string
+          format: uri
+          description: Pointer to bulky input data
     Artifact:
       type: object
-      required: [artifact_type, artifact_uri]
+      required:
+      - artifact_type
+      - artifact_uri
       properties:
         artifact_type:
           type: string
-          enum: [text_chunk, reasoning_trace, tool_call, explanation, other]
+          enum:
+          - text_chunk
+          - reasoning_trace
+          - tool_call
+          - explanation
+          - other
         artifact_uri:
           type: string
           format: uri
-        mime_type:  { type: string }
-        description: { type: string }
-
+        mime_type:
+          type: string
+        description:
+          type: string
     HumanOutput:
       type: object
-      required: [output_type, output_uri]
+      required:
+      - output_type
+      - output_uri
       properties:
-        output_type: { type: string, enum: [text, image, video, audio, other] }
-        output_uri:  { type: string, format: uri }
-        summary:     { type: string }
-
+        output_type:
+          type: string
+          enum:
+          - text
+          - image
+          - video
+          - audio
+          - other
+        output_uri:
+          type: string
+          format: uri
+        summary:
+          type: string
     Outcome:
       type: object
-      required: [outcome_type]
+      required:
+      - outcome_type
       properties:
         outcome_type:
           type: string
-          enum: [validated, contradicted, partial, unknown]
+          enum:
+          - validated
+          - contradicted
+          - partial
+          - unknown
         occurred_at:
           type: string
           format: date-time
-        description: { type: string }
-        evidence_uri: { type: string, format: uri }
-
+        description:
+          type: string
+        evidence_uri:
+          type: string
+          format: uri
     Feedback:
       type: object
-      required: [feedback_type]
+      required:
+      - feedback_type
       properties:
         feedback_type:
           type: string
-          enum: [rating, thumbs, text, survey]
+          enum:
+          - rating
+          - thumbs
+          - text
+          - survey
         rating_value:
           type: number
           minimum: 0
           maximum: 5
-        comment: { type: string }
-
-    # ---------- concrete event payloads ----------
+        comment:
+          type: string
     InferenceStartEvent:
       allOf:
-        - $ref: '#/components/schemas/BaseEvent'
-        - type: object
-          required: [model_instance, user_identity, target_identity, inputs]
-          properties:
-            model_instance:
-              $ref: '#/components/schemas/ModelInstance'
-            user_identity:
-              $ref: '#/components/schemas/UserIdentity'
-            target_identity:
-              $ref: '#/components/schemas/TargetIdentity'
-            inputs:
-              $ref: '#/components/schemas/Inputs'
-
+      - $ref: '#/components/schemas/BaseEvent'
+      - type: object
+        required:
+        - model_instance
+        - user_identity
+        - target_identity
+        - inputs
+        properties:
+          model_instance:
+            $ref: '#/components/schemas/ModelInstance'
+          user_identity:
+            $ref: '#/components/schemas/UserIdentity'
+          target_identity:
+            $ref: '#/components/schemas/TargetIdentity'
+          inputs:
+            $ref: '#/components/schemas/Inputs'
     InternalArtifactEvent:
       allOf:
-        - $ref: '#/components/schemas/BaseEvent'
-        - type: object
-          required: [artifact]
-          properties:
-            artifact:
-              $ref: '#/components/schemas/Artifact'
-
+      - $ref: '#/components/schemas/BaseEvent'
+      - type: object
+        required:
+        - artifact
+        properties:
+          artifact:
+            $ref: '#/components/schemas/Artifact'
     HumanOutputEvent:
       allOf:
-        - $ref: '#/components/schemas/BaseEvent'
-        - type: object
-          required: [output]
-          properties:
-            output:
-              $ref: '#/components/schemas/HumanOutput'
-
+      - $ref: '#/components/schemas/BaseEvent'
+      - type: object
+        required:
+        - output
+        properties:
+          output:
+            $ref: '#/components/schemas/HumanOutput'
     OutcomeEvent:
       allOf:
-        - $ref: '#/components/schemas/BaseEvent'
-        - type: object
-          required: [outcome]
-          properties:
-            outcome:
-              $ref: '#/components/schemas/Outcome'
-
+      - $ref: '#/components/schemas/BaseEvent'
+      - type: object
+        required:
+        - outcome
+        properties:
+          outcome:
+            $ref: '#/components/schemas/Outcome'
     UserFeedbackEvent:
       allOf:
-        - $ref: '#/components/schemas/BaseEvent'
-        - type: object
-          required: [feedback]
-          properties:
-            feedback:
-              $ref: '#/components/schemas/Feedback'
+      - $ref: '#/components/schemas/BaseEvent'
+      - type: object
+        required:
+        - feedback
+        properties:
+          feedback:
+            $ref: '#/components/schemas/Feedback'
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Provide a valid API key via the X-API-Key header.
+security:
+- ApiKeyAuth: []
