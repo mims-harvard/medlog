@@ -1,3 +1,9 @@
 # MedLog: A System Log for AI in Medicine and Healthcare
 
 We introduce MedLog, a protocol for event-level logging of clinical AI. Any time an AI model is invoked to interact with a human, interface with another algorithm, or act independently, a MedLog record is created. This record consists of nine core fields: model, user, target, inputs, artifacts, outputs, outcomes, metadata, and feedback, providing a structured and consistent record of model activity.
+
+## Generate Docs
+
+```
+npx @redocly/cli build-docs openapi.yaml
+```
